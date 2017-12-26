@@ -2,7 +2,7 @@
 #include <bits/stdc++.h>
 #include <SFML/Graphics.hpp>
 
-#include "Entity.h"
+#include "../inc/Entity.h"
 
 using namespace std;
 
@@ -19,9 +19,12 @@ int main ()
 	sf::Vector2i m_loc;
 	bool m_down = false;
 	sf::RenderWindow window(sf::VideoMode(1000, 1000), "Esrock");
+	//creates test blocker
+    sf::RectangleShape shape(sf::Vector2f(200, 200));
+    //creates test entity
+    Entity ent(sf::Vector2f(200, 200));
 
 	srand(time(0));
-
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -31,11 +34,11 @@ int main ()
 				window.close();
 			}
 		}
-
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !m_down) {
 			m_down = true;
 			m_loc = sf::Mouse::getPosition(window);
-
+			//moves entity
+			ent.pos = sf::Vector2f(m_loc.x, m_loc.y);
 			printf("Pressed: %d, %d\n", m_loc.x, m_loc.y);
 			fflush(stdout);
 		}
@@ -49,6 +52,21 @@ int main ()
 		}
 
 		window.clear();
+		//creates blocker hitbox
+		sf::Rect<float> shapeRect(400, 400, 200, 200);
+		//sets the hitbox
+		ent.setBlocker(shapeRect);
+		//move loop for entity
+        ent.moveBasic();
+
+        //sets position of blocker
+		shape.setPosition(400, 400);
+		//sets color of shape
+		shape.setFillColor(sf::Color(100, 0, 0));
+		//draws stuff
+        window.draw(shape);
+		window.draw(ent.getSelf());
+		window.draw(ent.getHit());
 		window.display();
 
 		// Comment this out to go fast like sanic
