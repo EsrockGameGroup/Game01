@@ -121,15 +121,27 @@ sf::Vector2f Entity::precise(sf::Vector2f newPos, sf::Vector2f oldPos, sf::Vecto
             //if there's no collision with the oldPos hitbox(what the precise hitbox is set as) even though there is a collision with the newPos one
             for(int i = 0; i < mag; i++)
             {
-                outPos.x += norm.x;
-                outPos.y += norm.y;
+                sf::Vector2f current;
+                //Check x
                 //moves the output position
-                checkPrecise = sf::Rect<float>(outPos, selfSize);
-                //updates the position of the hitbox
-                if(checkPrecise.intersects(target))
+
+                current = oldPos;
+                current.x = outPos.x;
+                checkPrecise = sf::Rect<float>(current, selfSize);
+                if(!checkPrecise.intersects(target))
                 {
-                    //breaks the loop if there's a problem with the new position
-                    break;
+                    outPos.x += norm.x;
+                }
+
+                //Check y
+                //moves the output position
+
+                current = oldPos;
+                current.y = outPos.y;
+                checkPrecise = sf::Rect<float>(current, selfSize);
+                if(!checkPrecise.intersects(target))
+                {
+                    outPos.y += norm.y;
                 }
             }
             //undoes the change in position that caused the collision

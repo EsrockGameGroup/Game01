@@ -18,7 +18,7 @@ int main ()
 {
 	sf::Vector2i m_loc;
 	bool m_down = false;
-	sf::RenderWindow window(sf::VideoMode(1000, 1000), "Esrock");
+	sf::RenderWindow window(sf::VideoMode(1000, 1000), "In the halls of the omniking");
 	//creates test blocker
     sf::RectangleShape shape(sf::Vector2f(200, 200));
     //creates test entity
